@@ -17,18 +17,18 @@ interface:
 steps:
   scrape-posts:
     source:
-      repoUrl: https://github.com/Edurata/edurata-functions.git
-      path: etl/extract/download-s3
+      repoUrl: https://github.com/juliandm/tickerforward
+      path: scrape
     dependencies:
       OXYLABS_PASSWORD: ${secrets.OXYLABS_PASSWORD}
   post-to-x:
     source:
       repoUrl: https://github.com/Edurata/edurata-functions.git
-      path: etl/load/upload-s3
+      path: etl/load/tweet
     dependencies:
-      AWS_ACCESS_KEY_ID: ${secrets.AWS_ACCESS_KEY_ID}
-      AWS_SECRET_ACCESS_KEY: ${secrets.AWS_SECRET_ACCESS_KEY}
-      bucket_name: wef-images
-      files:
-        - path: ${enrich-people.file}
-          key: people.json
+      API_KEY: ${secrets.TWITTER_API_KEY}
+      API_SECRET: ${secrets.TWITTER_API_SECRET}
+      ACCESS_TOKEN: ${secrets.TWITTER_ACCESS_TOKEN}
+      ACCESS_TOKEN_SECRET: ${secrets.TWITTER_ACCESS_TOKEN_SECRET}
+      BEARER_TOKEN: ${secrets.TWITTER_BEARER_TOKEN}
+      messages: ${steps.scrape-posts[*].summary}

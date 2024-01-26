@@ -62,9 +62,21 @@ def extract_info_from_ticker(ticker_url):
 
         return {
             "content": content_text,
-            "source_url": source_url
+            "sourceUrl": source_url
         }
     return None
+
+def create_tweet_summary(post):
+    title = post["title"]
+    date = post["date"]
+    ticker_info = post.get("tickerInfo", {})
+    content = ticker_info.get("content", "")
+
+    if len(content) > 100:
+        content = content[:97] + "..."
+    
+    tweet = f"{title}\n{date}\n\n{content}\Quelle: {ticker_info['source_url']}"
+    return tweet
 
 # Handler function to scrape and return the information
 def scrape_info():
@@ -92,8 +104,6 @@ def scrape_info():
             standardized_date = article.find('span', string=today_date).text.strip()
         ticker_url = article.find('h2', class_='blog-shortcode-post-title').find('a')['href'].strip()
 
-        print(standardized_date, today_date)
-
         if standardized_date == today_date:
             post_info = {
                 "title": title,
@@ -111,7 +121,14 @@ def scrape_info():
     for post in data["posts"]:
         ticker_info = extract_info_from_ticker(post["tickerUrl"])
         if ticker_info:
-            post["tickerInfo"] = ticker_info
+            post["content"] = ticker_info["content"]
+            post["sourceUrl"] = ticker_info["sourceUrl"]
+
+
+    # Create tweet summaries for each post
+    for post in data["posts"]:
+        tweet_summary = create_tweet_summary(post)
+        post["summary"] = tweet_summary
 
     # Return the JSON data
     return json.dumps(data, ensure_ascii=False, indent=2)

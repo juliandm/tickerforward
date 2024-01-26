@@ -9,6 +9,32 @@ interface:
       description: password for oxylabs
   outputs:
     properties:
-      success:
-        type: boolean
-        description: Whether the function was successful
+      posts:
+        type: array
+        title: posts
+        description: posts
+        items:
+          type: object
+          title: post
+          description: post
+          properties:
+            title:
+              type: string
+              title: title
+              description: title
+            date:
+              type: string
+              title: date
+              description: date
+            ticketUrl:
+              type: string
+              title: url
+              description: url
+            content:
+              type: string
+              title: description
+              description: description
+            sourceUrl:
+              type: string
+              title: source
+              description: source
