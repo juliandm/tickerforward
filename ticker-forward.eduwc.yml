@@ -1,0 +1,34 @@
+apiRevision: edurata.io/v1
+name: ticker-forward
+description: takes articles and posts them to X
+interface:
+  inputs:
+    properties:
+      cursor:
+        type: string
+        title: cursor
+        description: if to start from a specific element in the array
+        default: 0
+      limit:
+        type: number
+        title: limit
+        description: if to break after a specific number of elements processed
+        default: 100
+steps:
+  scrape-posts:
+    source:
+      repoUrl: https://github.com/Edurata/edurata-functions.git
+      path: etl/extract/download-s3
+    dependencies:
+      OXYLABS_PASSWORD: ${secrets.OXYLABS_PASSWORD}
+  post-to-x:
+    source:
+      repoUrl: https://github.com/Edurata/edurata-functions.git
+      path: etl/load/upload-s3
+    dependencies:
+      AWS_ACCESS_KEY_ID: ${secrets.AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${secrets.AWS_SECRET_ACCESS_KEY}
+      bucket_name: wef-images
+      files:
+        - path: ${enrich-people.file}
+          key: people.json
