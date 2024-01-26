@@ -1,3 +1,4 @@
+apiRevision: edurata.io/v1
 name: ticker-forwarder
 description: Takes entries from ticker
 runtime: python3_10
