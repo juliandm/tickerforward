@@ -31,4 +31,4 @@ steps:
       ACCESS_TOKEN: ${secrets.TWITTER_ACCESS_TOKEN}
       ACCESS_TOKEN_SECRET: ${secrets.TWITTER_ACCESS_TOKEN_SECRET}
       BEARER_TOKEN: ${secrets.TWITTER_BEARER_TOKEN}
-      messages: ${steps.scrape-posts[*].summary}
+      messages: ${scrape-posts.posts[*].summary}

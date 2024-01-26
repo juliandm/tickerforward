@@ -69,13 +69,13 @@ def extract_info_from_ticker(ticker_url):
 def create_tweet_summary(post):
     title = post["title"]
     date = post["date"]
-    ticker_info = post.get("tickerInfo", {})
-    content = ticker_info.get("content", "")
+    sourceUrl = post.get("sourceUrl", "")
+    content = post.get("content", "")
 
-    if len(content) > 100:
-        content = content[:97] + "..."
+    # if len(content) > 300:
+    #     content = content[:97] + "..."
     
-    tweet = f"{title}\n{date}\n\n{content}\Quelle: {ticker_info['source_url']}"
+    tweet = f"{title}\n{date}\n\n{content}\Quelle: {sourceUrl}"
     return tweet
 
 # Handler function to scrape and return the information
@@ -85,7 +85,6 @@ def scrape_info():
 
     # Send an HTTP GET request to the URL
     txt = call_proxy(url)
-    print(txt)
     # print(response.reason)
     # Check if the request was successful
     soup = BeautifulSoup(txt, 'html.parser')
@@ -124,7 +123,6 @@ def scrape_info():
             post["content"] = ticker_info["content"]
             post["sourceUrl"] = ticker_info["sourceUrl"]
 
-
     # Create tweet summaries for each post
     for post in data["posts"]:
         tweet_summary = create_tweet_summary(post)
@@ -132,6 +130,11 @@ def scrape_info():
 
     # Return the JSON data
     return json.dumps(data, ensure_ascii=False, indent=2)
+
+def handler(inputs):
+    return {
+        posts: scrape_info()
+    }
 
 # Call the handler function to scrape and return the information
 if __name__ == "__main__":
