@@ -132,9 +132,7 @@ def scrape_info():
     return json.dumps(data, ensure_ascii=False, indent=2)
 
 def handler(inputs):
-    return {
-        posts: scrape_info()
-    }
+    return scrape_info()
 
 # Call the handler function to scrape and return the information
 if __name__ == "__main__":
