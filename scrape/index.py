@@ -129,7 +129,7 @@ def scrape_info():
         post["summary"] = tweet_summary
 
     # Return the JSON data
-    return json.dumps(data, ensure_ascii=False, indent=2)
+    return data
 
 def handler(inputs):
     return scrape_info()
