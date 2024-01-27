@@ -4,10 +4,11 @@ description: Takes entries from ticker
 runtime: python3_10
 interface:
   inputs:
-    OXYLABS_PASSWORD:
-      type: env
-      title: OXYLABS_PASSWORD
-      description: password for oxylabs
+    properties:
+      OXYLABS_PASSWORD:
+        type: env
+        title: OXYLABS_PASSWORD
+        description: password for oxylabs
   outputs:
     properties:
       posts:
