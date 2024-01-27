@@ -1,6 +1,7 @@
 apiRevision: edurata.io/v1
 name: ticker-forward
 description: takes articles and posts them to X
+schedule: "0 0 * * *" # every day at midnight
 interface:
   inputs:
     properties:
