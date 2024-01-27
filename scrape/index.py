@@ -74,7 +74,7 @@ def create_tweet_summary(post):
 
     # if len(content) > 300:
     #     content = content[:97] + "..."
-    
+
     tweet = f"{title}\n{date}\n\n{content}\Quelle: {sourceUrl}"
     return tweet
 
